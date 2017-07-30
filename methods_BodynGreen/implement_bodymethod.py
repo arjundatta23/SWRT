@@ -144,12 +144,15 @@ def do_single_freq(per):
 	for tmode in range(len(k2)):
 		wt=mu2*(k2[tmode]+k2[tmode])/2
 		cctrans[tmode]=(integrate(shtrans,efmat2[:,tmode],dep1,dep2,wt))/omega
+		# NB: division of these integrals by omega is not part of the written equations but
+		# it is required for consistency with the ort module -- in the Love wave ort module,
+		# I have divided the normalising integral by omega so that it equals the energy
+		# flux (see notes).
 	for tmode in range(len(k1)):
 		wt=mu1*(k1[tmode]+k1[tmode])/2
 		ccref[tmode]=(integrate(shref,efmat1[:,tmode],dep1,dep1,wt))/omega
 
 	# For energy ref/trans. coefficients we need the amplitude coefficients w.r.t. normalized modes
-	# print "Looking for shapes: ", cctrans.shape, (np.sqrt(Nmed1[0])*np.sqrt(Nmed2)).shape
 	tcoef_norm = cctrans/(np.sqrt(Nmed1[0])*np.sqrt(Nmed2))
 	etrans=tcoef_norm**2
 	# Note we have taken Nmed1[0] which means it is implicit that incident field is ONLY the fundamental mode
@@ -241,7 +244,7 @@ fig1=plt.figure()
 fig2=plt.figure()
 #second figure is for the energy transmission coefficients
 fig3=plt.figure()
-#third figure is for the energy transmission coefficients
+#third figure is for the energy reflection coefficients
 ax1=fig1.add_subplot(111)
 ax2=fig2.add_subplot(111)
 ax3=fig3.add_subplot(111)

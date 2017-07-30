@@ -177,6 +177,8 @@ def do_single_freq(per):
 			I_b2psixx_21=integrate(b2_2to1,psixx_med1[m],dep1,True)
 			I_b1b4_12=integrate(b1_med1[m],b4_med2[n],dep1_orig,False)
 			I_b1b4_21=integrate(b1_med2[n],b4_med1[m],dep1_orig,False)
+			# NB: division of these integrals by omega not required in this case
+			# because the Rayleigh wave ort module does not do it.
 
 			P[m][n]=abs(I_b2psixx_12 - I_b2psixx_21 + I_b1b4_12 - I_b1b4_21)/(2*Nmed1[m])
 			if m==0:

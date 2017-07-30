@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 # modules writted by me
 import maineq as meq
-import orthonormality as ort
+import orthonormlov as ort
 
 # this program will take 2 eigenfunction files (corrresponding to two different media)
 # as input
@@ -24,6 +24,7 @@ def do_single_freq(per):
 # Get normalization factors
 #****************************************************
 	print "Computing normalization factors for period %f" %(per)
+	omega=2*np.pi/per
 
 	# medium 1
 	oobj1=ort.ortho(effile1,per,dcon1,True)
@@ -54,7 +55,7 @@ def do_single_freq(per):
 	# S and V matrices can be built by ort module as only 1 medium is involved hence the eigenfunctions have
 	# same depth sampling.
 	# P and T matrices must be built from scratch in this program as two different media are involved,
-	# so depth sampling of eigenfunctions is different, in general, so ort cannot do the required integrations
+	# so depth sampling of eigenfunctions is different (in general), so ort cannot do the required integrations
 #*******************************************************************************************************
 	print "Computing required integrals"
 	S=np.zeros((n,n))
@@ -105,27 +106,40 @@ def do_single_freq(per):
 				print "z2 after addition ", z2[addid-5:addid+5]
 				print "ef2 after addition ", ef2[addid-5:addid+5]
 			if len(z2) != len(z1) or len(ef2) != len(ef1):
-				sys.exit('Problem with depth sampling of eigenfunctions from the 2 media')
+				sys.exit('Problem with depth sampling of eigenfunctions from the two media')
+		
+		sumint=0.0
+		for l in range(len(dcon1)):
+			sid=np.where(z1==dcon1[l])[0][0]
+			if l>0:
+				sid_prev=np.where(z1==dcon1[l-1])[0][0]
+				top=sid_prev+1
+			else:
+				top=0
+		
+			# integration above each discontinuity
+			phi_ij=ef1[top:sid]*ef2[top:sid]
+			prod=phi_ij*weight[top:sid]
+			int_above=spi.simps(prod,z1[top:sid])
+			sumint += int_above
 
-		sid=np.where(z1==dcon1)[0][0]
-		# integration above discontinuity
-		phi_ij=ef1[:sid]*ef2[:sid]
-		prod=phi_ij*weight[:sid]
-		int_above=spi.simps(prod,z1[:sid])
-
-		# integration below discontinuity
+		# integration below deepest discontinuity
 		phi_ij=ef1[sid+1:]*ef2[sid+1:]
 		prod=phi_ij*weight[sid+1:]
 		int_below=spi.simps(prod,z1[sid+1:])
 
-		integral = int_above + int_below
+		integral = sumint + int_below
 		return integral
 
 	for i in range(n):
 		for j in range(m):
-			T[i,j]=integrate(efmat1[:,i],efmat2[:,j],dep1,dep2)
 			wfn=k1[i]*mu1
-			P[i,j]=integrate(efmat1[:,i],efmat2[:,j],dep1,dep2,wfn)
+			T[i,j]=integrate(efmat1[:,i],efmat2[:,j],dep1,dep2)/omega
+			P[i,j]=integrate(efmat1[:,i],efmat2[:,j],dep1,dep2,wfn)/omega
+			# NB: in the above, division by omega is not part of the written equations but
+			# it is required for consistency with the ort module -- in the Love wave ort module,
+			# I have divided the normalising integral by omega so that it equals the energy
+			# flux (see notes).
 	T=T/N12
 	P=P/N12
 
@@ -158,23 +172,20 @@ def do_single_freq(per):
 	rc_proper = rc*np.sqrt(Nmed1[0]/Nmed1)
 	tc_proper = tc*np.sqrt(Nmed1[0]/Nmed2)
 	# Note that because I've taken Nmed1[0], I'm assuming that incident mode
-	# is the fundamental mode
+	# is the fundamental mode.
 	print "Transmission coefficients (surface displacement ratio): ", tc_proper
 	return rc_proper,tc_proper, energy_ref, energy_trans
 
 #************************ Main program **********************************
 
-dcon=raw_input("Enter depths of discontinuity for the 2 media: ")
-dcon1=float(dcon.split()[0])
-dcon2=float(dcon.split()[1])
+dcon1=raw_input("Depths of discontinuity for the incidence side medium: ")
+dcon2=raw_input("Depths of discontinuity for the transmission side medium: ")
+dcon1=[float(i) for i in dcon1.split()]
+dcon2=[float(i) for i in dcon2.split()]
 frange=raw_input('Enter frequency range: ')
 fl=float(frange.split()[0])
 fh=float(frange.split()[1])
 freq=np.arange(fh,fl,-0.005)
-# special additions
-#freq=np.insert(freq,-1,0.007)
-#freq=np.insert(freq,-3,0.012)
-#freq=np.array([0.04])
 allper=1/freq
 # for the plotting to work properly allper must be sorted in ascending order
 rcoeff=range(len(allper))
@@ -200,7 +211,6 @@ for p,per in enumerate(allper):
 	tcoeff[p] = tcper
 	eng_ref[p] = erefper
 	eng_trans[p] = etper
-	print p, len(rcper), len(tcper)
 #print eng_ref, eng_trans
 #rcm=range(maxmr); tcm=range(maxmt)
 rcm=np.empty((maxmr,len(freq)))
@@ -214,19 +224,26 @@ for j in range(maxmt):
 	tcm[j,:]=[tc[j] for tc in tcoeff]
 	etm[j,:]=[et[j] for et in eng_trans]
 
+fig1=plt.figure()
+fig2=plt.figure()
+ax1=fig1.add_subplot(111)
+ax2=fig2.add_subplot(111)
+
 # plot the reflected/transmitted energy
-for i in range(maxmt):
-	plt.plot(freq,etm[i],'o-')
-for i in range(maxmr):
-	plt.plot(freq,erm[i],'o-')
-plt.ylim(0,1.1)
-plt.ylabel('Fraction of incident energy')
+#for i in range(maxmt):
+#	ax1.plot(freq,etm[i],'o-')
+#for i in range(maxmr):
+#	ax2.plot(freq,erm[i],'o-')
+#plt.ylim(0,1.1)
+#plt.ylabel('Fraction of incident energy')
 
 # plot the reflection/transmission surface ratios
-#for i in range(maxmt):
-#	plt.plot(freq,tcm[i],'o-')
-#for i in range(maxmr):
-#	plt.plot(freq,rcm[i],'o-')
+for i in range(maxmt):
+	ax1.plot(freq,tcm[i],'o-')
+for i in range(maxmr):
+	ax2.plot(freq,rcm[i],'o-')
+ax1.set_ylabel('Transmission surface ratio')
+ax2.set_ylabel('Reflection surface ratio')
 plt.show()
 usrc=raw_input("Do you want to save the result ? (y/n) : ")
 if usrc=='y':

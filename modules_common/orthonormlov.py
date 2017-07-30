@@ -19,7 +19,7 @@ class ortho():
 		origdep=reoobj.dep
 		self.dcon=dcon
 		nmodes=oegnfnmat.shape[1]
-		matint=np.zeros((nmodes,nmodes)) # matrix of integrals
+		self.matint=np.zeros((nmodes,nmodes)) # matrix of integrals
 		self.norms=np.zeros(nmodes) # vector of integrals
 		self.kmode=reoobj.wavnum
 		self.mu=reoobj.mu
@@ -72,8 +72,8 @@ class ortho():
 			""" Division by omega is necessary to get energy flux - see notes for details """
 			if __name__=='__main__':
                                 print "Mode number %d and %d: %f" %(i,j,ans)
-			matint[j][i]=ans
-			self.norms=np.diagonal(matint)
+			self.matint[j][i]=ans
+			self.norms=np.diagonal(self.matint)
 
 	def integrate(self,egf1,egf2,wfn):
 
@@ -106,4 +106,5 @@ if __name__=='__main__':
 	dhif=raw_input("Enter depths of horizontal interfaces: ")
 	discon=[float(d) for d in dhif.split()]
 	orobj=ortho(effile,per,discon,True)
+	print orobj.matint
 	print "Normalization factors are: ", orobj.norms

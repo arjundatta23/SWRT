@@ -136,6 +136,10 @@ def do_single_freq(per):
 	
 	for m in range(len(Nmed1)):
 		for n in range(len(Nmed2)):
+			# NB: division of below integrals by omega is not part of the written equations but
+			# it is required for consistency with the ort module -- in the Love wave ort module,
+			# I have divided the normalising integral by omega so that it equals the energy
+			# flux (see notes).
 			wt=mu1*(k1[m])/2
 			I1=(integrate(phimed1[m],phimed2[n],dep1,dep2,wt,2))/omega
 			# depth sampling of phimed2 will need to be altered

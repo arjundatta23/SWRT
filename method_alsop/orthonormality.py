@@ -59,7 +59,7 @@ class ortho():
 				else:
 					wt=self.mu
 			ans=self.integrate(self.egnfnmat[:,i],self.egnfnmat[:,j],wt)
-			self.matint[ij]=ans
+			#self.matint[ij]=ans
 			self.matint[j][i]=ans
 			if __name__=='__main__':
 				print "Mode number %d and %d: %f" %(i,j,ans)
