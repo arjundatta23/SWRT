@@ -177,7 +177,7 @@ def do_single_freq(per):
 	return rc_proper,tc_proper, energy_ref, energy_trans
 
 #************************ Main program **********************************
-
+fstep=-0.005
 dcon1=raw_input("Depths of discontinuity for the incidence side medium: ")
 dcon2=raw_input("Depths of discontinuity for the transmission side medium: ")
 dcon1=[float(i) for i in dcon1.split()]
@@ -185,7 +185,7 @@ dcon2=[float(i) for i in dcon2.split()]
 frange=raw_input('Enter frequency range: ')
 fl=float(frange.split()[0])
 fh=float(frange.split()[1])
-freq=np.arange(fh,fl,-0.005)
+freq=np.arange(fh,fl+fstep,fstep)
 allper=1/freq
 # for the plotting to work properly allper must be sorted in ascending order
 rcoeff=range(len(allper))

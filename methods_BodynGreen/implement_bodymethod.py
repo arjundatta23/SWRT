@@ -161,7 +161,7 @@ def do_single_freq(per):
 	print "Fraction of energy transmitted: ", sum(etrans)
 	# Note that in above line, the sum is sum over modes
 
-	# For surface ratio of displacements, we don't need the above
+	# For surface ratio of displacements, we actually don't need "tcoef_norm" and "rcoef_norm"
 	srtrans=cctrans/Nmed2
 	srref=ccref/Nmed1
 	return etrans, eref, srtrans, ccref

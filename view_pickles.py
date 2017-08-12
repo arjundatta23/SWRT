@@ -41,13 +41,11 @@ if usrc2=='y':
 	iseng=True
 for i,pkl in enumerate(pfnames):
 	freq,values,verr=read_single(pkl)
-#	if i==1:
-#		verr[0][0:2]=None
 	cols=['k','b','r','g','y','m','0.3','0.5']
-	#mname=['Model F','Model L','r','g','y','m']
+	mname=['Model F','Model L','r','g','y','m']
 	#mname=['dz 0.5','dz 1','r','g','y','m']
 	#mname=['rhs 7','rhs 5','r','g','y','m']
-	mname=['FD-pert','FD-Bielak']
+	#mname=['FD-pert','FD-Bielak']
 	#mname=['Alsop method', 'Body wave method', 'Green''s function method']
 	#mname=['1D model (incidence side medium)', '2D model (transmission side)']
 	#mname=['Model 1, 'r'$\alpha=0.1$','Model 2, 'r'$\alpha=0.4$','Model 3, 'r'$\alpha=0.7$']
@@ -65,8 +63,6 @@ for i,pkl in enumerate(pfnames):
 				#plt.plot(freq,values[mode],'--',color=cols[i],label=cname_temp)
 				#plt.plot(freq,values[mode],'--.',color=cols[i])
 	elif usrc==2:
-#		if i==1:
-#			verr[0][0:4]=None
 		for mode in range(len(values)):
 		#for mode in range(1):
 			cname="Mode %d" %(mode)
@@ -82,16 +78,21 @@ for i,pkl in enumerate(pfnames):
 			elif i==1:
 				if verr==None:
 					try:
-						plt.plot(freq,values[mode],'-o',color=cols[mode])
+						plt.plot(freq,values[mode],'--o',color=cols[mode],mec=cols[mode],mfc="None",ms=8)
 					except IndexError:
 						plt.plot(freq,values[mode],'-o')
 				else:
 					try:
-						plt.errorbar(freq,values[mode],yerr=verr[mode],fmt='.',color=cols[mode],ecolor='gray')
-						#plt.plot(freq,values[mode],'.',color=cols[mode],markersize=6)
+						#plt.errorbar(freq,values[mode],yerr=verr[mode],fmt='.',color=cols[mode],ecolor='gray')
+						plt.plot(freq,values[mode],'.',color=cols[mode],markersize=6)
 					except IndexError:
 						# means no. of modes in pickle is > len(colors)
 						plt.errorbar(freq,values[mode],yerr=verr[mode],fmt='.',ecolor='gray',label=cname)
+			elif i==2:
+				try:
+					plt.plot(freq,values[mode],'-*',color=cols[mode],mec=cols[mode],ms=8)
+				except IndexError:
+					plt.plot(freq,values[mode],'-*')
 				
 		if iseng and len(values)>1:
 			if i==0:
@@ -102,7 +103,7 @@ for i,pkl in enumerate(pfnames):
 #plt.ylim(0.4,1.2)
 #plt.ylim(0.7,0.8)
 #plt.ylim(1.2,1.28)
-#plt.ylim(0,1.2)
+#plt.ylim(0,1)
 #plt.xlim(0,0.05)
 #plt.text(0.02,0.2,r'Model: $\alpha=0.7$',fontsize=18)
 #plt.text(0.1,0.6,r'Model: $\alpha=0.4$',fontsize=18)
