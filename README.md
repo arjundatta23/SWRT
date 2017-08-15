@@ -1,12 +1,14 @@
 # sw_reftrans
 Code accompanying Datta 2017: "SWRT: A package for semi-analytical solutions of surface wave propagation, including mode conversion, across transversely aligned vertical discontinuities", submitted by Arjun Datta to Computers and Geosciences, 2017
 
+Refer to the above for abbreviations/acronyms used in this README. 
+
 SWRT consists of four programs, implementing the three algorithms discussed in Datta 2017:
 
 1. "method_alsop/implement_alsop.py" - implements the Alsop method (Love waves only)
 2. "methods_BodynGreen/implement_bodymethod.py" - implements the GregAl method (Love waves only)
 3. "methods_BodynGreen/implement_green_lov.py" - implements the GF method for Love waves
-4. "methods_BodynGreen/implement_green_ray.py" - implemrnts the GF method for Rayleigh waves
+4. "methods_BodynGreen/implement_green_ray.py" - implements the GF method for Rayleigh waves
 
 Modules which are used by all or some of these programs are in the directory "modules_common".
 
