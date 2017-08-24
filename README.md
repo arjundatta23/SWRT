@@ -1,5 +1,5 @@
 # sw_reftrans
-Code accompanying Datta 2017: "SWRT: A package for semi-analytical solutions of surface wave propagation, including mode conversion, across transversely aligned vertical discontinuities", submitted by Arjun Datta to Computers and Geosciences, 2017
+Code accompanying Datta 2017: "SWRT: A Python package for semi-analytical solutions of surface wave propagation, including mode conversion, across transversely aligned vertical discontinuities"
 
 Refer to the above for abbreviations/acronyms used in this README. 
 
@@ -12,7 +12,8 @@ SWRT consists of four programs, implementing the three algorithms discussed in D
 
 Modules which are used by all or some of these programs are in the directory "modules_common".
 
-BASIC CODE USAGE
+**********************************************************************************************
+I. BASIC CODE USAGE
 
 SWRT should run on any system with a standard Python installation. NumPy and SciPy may have to be installed separately, while
 matplotlib is required for visualization. All the above programs require the same input (command line) arguments, i.e. two 
@@ -34,7 +35,8 @@ Enter depth of horizonatl interfaces for medium 2: 7 50 150 215
 Enter frequency range: 0.01 0.15
 ############
 
-RUNNING THE EXAMPLE "example_modL_rhslyr7".
+**********************************************************************************************
+II. RUNNING THE EXAMPLE "example_modL_rhslyr7".
 
 SWRT contains an example which corresponds to Figures 1 and 2 of Datta 2017. For Love wave propagation in the forward direction, <ef1> and <ef2> are eigen.xdist.0.lov.gz and eigen.xdist.400.lov.gz respectively. The GAl and GF methods can be run on this example (for Love waves) with the following commands:
 
