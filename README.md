@@ -67,7 +67,8 @@ x-location of vertical discontinuity in model: 250
 After enetring the frequency range, this should produce the results needed to reproduce Figure 2 of Datta 2017.
 NB: To do the Rayleigh case, simply replace the Love wave eigenfunction files (eigen.xdist.0.lov.gz, eigen.xdist.400.lov.gz) with Rayleigh ones (eigen.xdist.0.ray.gz eigen.xdist.400.ray.gz).
 
-VISUALIATION/PLOTTING SCRIPT
+**********************************************************************************************
+III. VISUALIATION/PLOTTING SCRIPT
 
 SWRT makes use of the Python pickle module to store the results of any run of a program as a "pickle" which can be loaded later for visualization etc. The script "view_pickles.py" is provided for this purpose. If the result of any of the four programs described above is stored as <pickle name>, figures such as those in Datta 2017 can be made using:
 
