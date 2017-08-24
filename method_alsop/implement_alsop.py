@@ -34,7 +34,7 @@ def do_single_freq(per):
 	efmat1=oobj1.egnfnmat # matrix containing eigenfunctions for medium 1
 	Nmed1=oobj1.norms
 	n=len(Nmed1) # no. of modes in medium 1 (at period per)
-	Nmat1=np.sqrt(np.dot(Nmed1.reshape(n,1),Nmed1.reshape(1,n))) # matrix of normalizing factors for medium 1
+	Nmat1=np.sqrt(np.outer(Nmed1,Nmed1)) # matrix of normalizing factors for medium 1
 
 	# medium 2
 	oobj2=ort.ortho(effile2,per,dcon2,True)
@@ -44,11 +44,10 @@ def do_single_freq(per):
 	efmat2=oobj2.egnfnmat # matrix containing eigenfunctions for medium 2
 	Nmed2=oobj2.norms
 	m=len(Nmed2) # no. of modes in medium 2
-	Nmat2=np.sqrt(np.dot(Nmed2.reshape(m,1),Nmed2.reshape(1,m))) # matrix of normalizing factors for medium 2
+	Nmat2=np.sqrt(np.outer(Nmed2,Nmed2)) # matrix of normalizing factors for medium 2
 
 	# matrix of mixed (medium 1 & 2) normalizing factors - required for the integrals T and P
-	N12=np.sqrt(np.dot(Nmed1.reshape(n,1),Nmed2.reshape(1,m)))
-
+	N12=np.sqrt(np.outer(Nmed1,Nmed2))
 
 #******************************************************************************************************
 	# Compute required integrals - build P,S,T,V matrices
