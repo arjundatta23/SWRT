@@ -1,4 +1,4 @@
-# sw_reftrans
+# SWRT
 Code accompanying Datta 2017: "SWRT: A Python package for semi-analytical solutions of surface wave propagation, including mode conversion, across transversely aligned vertical discontinuities"
 
 Refer to the above for abbreviations/acronyms used in this README. 
