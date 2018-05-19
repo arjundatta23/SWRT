@@ -103,7 +103,7 @@ for i,pkl in enumerate(pfnames):
 #plt.ylim(0.4,1.2)
 #plt.ylim(0.7,0.8)
 #plt.ylim(1.2,1.28)
-#plt.ylim(0,1)
+#plt.ylim(-0.05,1)
 #plt.xlim(0,0.05)
 #plt.text(0.02,0.2,r'Model: $\alpha=0.7$',fontsize=18)
 #plt.text(0.1,0.6,r'Model: $\alpha=0.4$',fontsize=18)
