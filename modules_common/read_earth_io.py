@@ -13,8 +13,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Modules written by me
-
-import read_surf96_io as rs96
+#import read_surf96_io as rs96
 
 ##################################################################################################################
 
