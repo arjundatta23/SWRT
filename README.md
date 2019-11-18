@@ -3,7 +3,7 @@ SWRT: Surface Wave Refelction and Transmission. This is a package of code for se
 
 Datta, A.: SWRT: A package for semi-analytical solutions of surface wave propagation, including mode conversion, across transversely aligned vertical discontinuities, Geosci. Instrum. Method. Data Syst., 7, 101-112, https://doi.org/10.5194/gi-7-101-2018, 2018.
 
-Refer to the above for abbreviations/acronyms used in this README.
+Refer to the above for abbreviations/acronyms and references used in this README.
 
 **********************************************************************************************
 A. PACKAGE CONTENTS AND OVERVIEW
