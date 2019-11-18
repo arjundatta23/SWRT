@@ -72,7 +72,7 @@ NB: in the above commands there is an addtional argument "m0theor.vs.ascii.gz". 
 With the code in its current form, simply enter the location of the vertical discontinuity, which happens to be 250 km in the example dir.
 
 ###########  
-x-location of vertical discontinuity in model: 250
+x-location of vertical discontinuity in model: 250  
 ###########  
 
 After enetring the frequency range, this should produce the results needed to reproduce Figure 2 of Datta 2018.  
@@ -84,5 +84,5 @@ D. VISUALIATION/PLOTTING SCRIPT
 SWRT makes use of the Python pickle module to store the results of any run of a program as a "pickle" which can be loaded later for visualization etc. The script "view_pickles.py" is provided for this purpose. If the result of any of the main programs is stored as {pickle name}, figures such as those in Datta (2018) can be made using:
 
 ############  
-python "view_pickles.py" {pickle name 1} {pickle name 2} .... upto any number of stored pickles.
+python "view_pickles.py" {pickle name 1} {pickle name 2} .... upto any number of stored pickles.  
 ############
