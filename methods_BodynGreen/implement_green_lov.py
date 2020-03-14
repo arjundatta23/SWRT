@@ -7,9 +7,13 @@ import numpy as np
 import scipy.integrate as spi
 import matplotlib.pyplot as plt
 
+sys.path.append('../modules_common')
+
 # modules written by me
 import orthonormlov as ortl
 import get_interface_sections as gis
+
+#######################################################################################
 
 def do_single_freq(per):
 

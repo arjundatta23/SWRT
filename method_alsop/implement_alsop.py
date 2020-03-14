@@ -8,6 +8,8 @@ import numpy as np
 import scipy.integrate as spi
 import matplotlib.pyplot as plt
 
+sys.path.append('../modules_common')
+
 # modules writted by me
 import maineq as meq
 import orthonormlov as ort
@@ -73,7 +75,7 @@ def do_single_freq(per):
 	# T and P matrices
 	def integrate(ef1,ef2,z1,z2,wt=None):
 		checking=False	
-		if wt==None:
+		if wt is None:
 			weight=np.ones(len(z1))
 		else:
 			weight=wt

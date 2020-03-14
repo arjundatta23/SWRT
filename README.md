@@ -23,15 +23,14 @@ matplotlib is required for visualization. All the above programs require the sam
 files containing the Love or Rayleigh eigenfunctions on either side of the vertical interface. I denote these <ef1> and
 <ef2>, corresponding to the incidence side and transmission side media respectively. I call these medium 1 and medium 2.
 
-Beyond the command line arguments, there are two (prompted) user inputs -- first, the horzontal discontinuities in medium 1
-and medium 2. These need to be entered (depths in km) as a sequence of numbers, for each of the two media separately. Second, 
-the user needs to enter the frequency range (lower and upper bounds of frequency in Hz) in which calculations are to be performed.
+Beyond the command line arguments, there are upto two (prompted) user inputs -- first, the horzontal discontinuities in medium 1
+and medium 2. This prompt only appears with the Alsop method code and requires the depths of layer interfaces (in km) to be entered as a sequence of numbers, for each of the two media separately. Second, the user needs to enter the frequency range (lower and upper bounds of frequency in Hz) in which calculations are to be performed.
 
 For instance, if we consider the example of propagation from left to right in the demo model in Datta 2018 (Figure 1), this
 model has horizontal discontunities at depths of 30, 50, 150, 215 km in medium 1, and 7, 50, 150, 215 km in medium 2. To run, say "implement alsop" on this model, do
 
 ############
-python implement_alsop.py <ef1> <ef2>
+python implement_alsop.py </path_to/ef1> </path_to/ef2>
 
 Enter depth of horizonatl interfaces for medium 1: 30 50 150 215
 Enter depth of horizonatl interfaces for medium 2: 7 50 150 215
