@@ -1,5 +1,5 @@
 # SWRT
-SWRT: Surface Wave Refelction and Transmission. This is a package of code for semi-analytic solutions of seismic surface wave propgation across sharp lateral discontinuities in 2-D media.  It accompanies Datta (2018): 
+SWRT: Surface Wave Refelction and Transmission. This is a suie of codes for semi-analytic solutions of seismic surface wave propgation across sharp lateral discontinuities in 2-D media.  It accompanies Datta (2018):
 
 Datta, A.: SWRT: A package for semi-analytical solutions of surface wave propagation, including mode conversion, across transversely aligned vertical discontinuities, Geosci. Instrum. Method. Data Syst., 7, 101-112, https://doi.org/10.5194/gi-7-101-2018, 2018.
 
@@ -15,72 +15,57 @@ SWRT consists of four main programs, implementing the three algorithms discussed
 3. "methods\_BodynGreen/implement\_green\_lov.py" - implements the Green's Function (GF) method for Love waves
 4. "methods\_BodynGreen/implement\_green\_ray.py" - implements the GF method for Rayleigh waves
 
-Modules which are used by all or some of these programs are in the directory "modules_common".
+All programs rely on the 'SW1D_earthsr' set of modules, which is available as a separate respository:
+https://github.com/arjundatta23/SW1D_earthsr
 
 **********************************************************************************************
 B. BASIC CODE USAGE
 
-SWRT should run on any system with a standard Python installation. NumPy and SciPy may have to be installed separately, while matplotlib is required for visualization. All the four programs can be run from the command line.
+SWRT requires NumPy, SciPy and matplotlib (for visualization). All four programs can be run from the command line.
 
-Beyond the command line arguments, there are upto two (prompted) user inputs -- first, the horzontal discontinuities in medium 1
-and medium 2. This prompt only appears with the Alsop method code and requires the depths of layer interfaces (in km) to be entered as a sequence of numbers, for each of the two media separately. Second, the user needs to enter the frequency range (lower and upper bounds of frequency in Hz) in which calculations are to be performed.
+Apart from the command line arguments, the user is required to input the frequency range (lower and upper bounds of frequency in Hz) in which calculations are to be performed.
 
 =======
 Simple command line usage:
 
-python implement_alsop.py </path_to/ef1> </path_to/ef2>
+python <code_name> <mod\_file\_1> <eigen\_file\_1> <mod\_file\_2> <eigen\_file\_2>
 =======
+<mod\_file\_1> and <mod\_file\_2> are ASCII text files containing the layered-Earth model on either side of the vertical interface in the 2-D medium, corresponding to the incidence side and transmission side media respectively.
+<eigen\_file\_1> and <eigen\_file\_2> are ASCII files containing the corresponding (local) Love or Rayleigh wave eigenfunctions on the two sides.
 
-{ef1} and {ef2} are the two files containing Love or Rayleigh wave eigenfunctions on either side of the vertical interface in the model, corresponding to the incidence side and transmission side media respectively. I call these medium 1 and medium 2.
+If you want to use the code as is, all input files are in 'earthsr' format (see example dir) and are therefore read by modules in 'SW1D_earthsr'.
 
-Prompted user inputs:
+Prompted user input: frequency range (lower and upper bounds in Hz) in which calculations are to be performed.
 
-1. Horzontal discontinuities in medium 1 and medium 2. These need to be entered as a sequence of numbers (depths in km), for each of the two media separately. 
-2. Frequency range (lower and upper bounds in Hz) in which calculations are to be performed.
-
-For example, if we consider the example of propagation from left to right in the demo model in Datta (2018, Figure 1), this
-model has horizontal discontunities at depths of 30, 50, 150, 215 km in medium 1, and 7, 50, 150, 215 km in medium 2. 
-To run "implement\_alsop" on this model in the frequency range 0.01 - 0.1 Hz, you would do:
+For example, if we consider the example of propagation from left to right in the demo model in Datta (2018, Figure 1),
+to run "implement\_alsop" on this model in the frequency range 0.01 - 0.1 Hz, you would do:
 
 ############  
-python implement_alsop.py </path_to/ef1> <path_to/ef2>
-
-Enter depth of horizonatl interfaces for medium 1: 30 50 150 215  
-Enter depth of horizonatl interfaces for medium 2: 7 50 150 215  
+python implement_alsop.py <mod\_file\_1> <eigen\_file\_1> <mod\_file\_2> <eigen\_file\_2>
+<SOME CODE OUTPUT>
 Enter frequency range: 0.01 0.1  
 ############  
 
 **********************************************************************************************
 C. RUNNING THE EXAMPLE "example\_modL\_rhslyr7".
 
-SWRT contains an example which corresponds to Figures 1 and 2 of Datta (2018). For Love wave propagation in the forward direction, {ef1} and {ef2} are "eigen.xdist.0.lov.gz" and "eigen.xdist.400.lov.gz" respectively. The GAl and GF methods can be run on this example (for Love waves) with the following commands:
+SWRT contains an example which corresponds to Figures 1 and 2 of Datta (2018). For Love wave propagation in the forward direction, <eigen\_file\_1> and <eigen\_file\_2> are "eigen.xdist.0.lov.gz" and "eigen.xdist.400.lov.gz" respectively. The GAl and GF methods can be run on this example (for Love waves) with the following commands:
 
-For forward direction:
-
-###############  
-python methods_BodynGreen/implement_bodymethod.py "m0theor.vs.ascii.gz" "eigen.xdist.0.lov.gz" "eigen.xdist.400.lov.gz"  
-python methods_BodynGreen/implement_green_lov.py "m0theor.vs.ascii.gz" "eigen.xdist.0.lov.gz "eigen.xdist.400.lov.gz"  
-###############  
-
-For backward direction:
+For forward direction (medium 1 -> medium 2):
 
 ###############  
-python methods_BodynGreen/implement_bodymethod.py "m0theor.vs.ascii.gz" "eigen.xdist.400.lov.gz" "eigen.xdist.0.lov.gz"  
-python methods_BodynGreen/implement_green_lov.py "m0theor.vs.ascii.gz" "eigen.xdist.400.lov.gz" "eigen.xdist.0.lov.gz"  
+python ../methods_BodynGreen/implement_bodymethod.py mod.xdist.0.lov eigen.xdist.0.lov.gz mod.xdist.400.lov eigen.xdist.400.lov.gz  
+python ../methods_BodynGreen/implement_green_lov.py mod.xdist.0.lov eigen.xdist.0.lov.gz mod.xdist.400.lov eigen.xdist.400.lov.gz  
 ###############  
 
-NB: For backward propagation, you will also need to answer yes '(y)' to the prompted question
-"Consider incidence from right hand side (y/n)?: "
+For backward direction (medium 1 <- medium 2):
 
-NB: in the above commands there is an addtional argument "m0theor.vs.ascii.gz". This is an ascii file containing the Vs structure for the model, in a format used by Roecker et al. (2010). Since I worked with this file format, for my convenience I wrote a module "get\_interface\_sections.py", used by the "methods\_BodynGreen" programs, which goes through the ascii model file and extracts the horizontal interfaces in medium 1 and medium 2, provided the user supplies the lateral location (in km) of the vertical interface. However this preliminary task is completely extraneous to the implemented algorithms and can be done away with with a trivial modification of the code. The horizontal interfaces can be entered manually as with the "implement\_alsop.py" program.
+###############  
+python ../methods_BodynGreen/implement_bodymethod.py mod.xdist.400.lov eigen.xdist.400.lov.gz mod.xdist.0.lov eigen.xdist.0.lov.gz  
+python ../methods_BodynGreen/implement_green_lov.py mod.xdist.400.lov eigen.xdist.400.lov.gz mod.xdist.0.lov eigen.xdist.0.lov.gz  
+###############    
 
-With the code in its current form, simply enter the location of the vertical discontinuity, which happens to be 250 km in the example dir.
-
-###########  
-x-location of vertical discontinuity in model: 250  
-###########  
-
-After enetring the frequency range, this should produce the results needed to reproduce Figure 2 of Datta 2018.  
+After entering the frequency range, this should produce the results needed to reproduce Figure 2 of Datta 2018.  
 NB: To do the Rayleigh case, simply replace the Love wave eigenfunction files ("eigen.xdist.0.lov.gz", "eigen.xdist.400.lov.gz") with Rayleigh ones ("eigen.xdist.0.ray.gz", "eigen.xdist.400.ray.gz").
 
 **********************************************************************************************
