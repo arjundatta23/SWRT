@@ -26,13 +26,13 @@ def do_main(P,S,T,V):
 	md1=mc1[:,j].reshape(n,1)
 	md2=mc2[:,j].reshape(n,1)
 	md3=mc3[:,j].reshape(n,1)
-	
+
 	D = md2 + md3 - md1 - sd
 
 	a=np.linalg.solve(C,D)
 
 	b = Pt[:,j].reshape(m,1) - np.dot(Pt,a)
-	#print "C matrix:\n ", C
-	#print "D matrix:\n ", D
-	
+	# print("C matrix:\n ", C)
+	# print("D matrix:\n ", D)
+
 	return a,b

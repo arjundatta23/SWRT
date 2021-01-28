@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 #######################################################
 
 def read_single(pfile):
-	jar=open(pfile)
-	print "Reading ", pfile
+	jar=open(pfile, 'rb')
+	print("Reading ", pfile)
 	cookie1 = pickle.load(jar)
 	cookie2 = pickle.load(jar)
 	try:
@@ -17,9 +17,9 @@ def read_single(pfile):
 	except EOFError:
 		cookie3 = None
 	jar.close()
-	#print cookie1
-	#print cookie2
-	#print len(cookie2)
+	# print(cookie1)
+	# print(cookie2)
+	# print(len(cookie2))
 	return cookie1, cookie2, cookie3
 
 #######################################################
@@ -34,9 +34,9 @@ for pf in range(1,nfiles):
 		datfile=sys.argv[pf]
 		pub_data=open(datfile)
 		compare_pub=True
-usrc=int(raw_input("Plotting results for different models (1) or different methods on the same model (2) ? : "))
+usrc=int(input("Plotting results for different models (1) or different methods on the same model (2) ? : "))
 iseng=False
-usrc2=raw_input("Is this/are these energy pickle(s)? (y/n): ")
+usrc2=input("Is this/are these energy pickle(s)? (y/n): ")
 if usrc2=='y':
 	iseng=True
 for i,pkl in enumerate(pfnames):
@@ -51,7 +51,7 @@ for i,pkl in enumerate(pfnames):
 	#mname=['Model 1, 'r'$\alpha=0.1$','Model 2, 'r'$\alpha=0.4$','Model 3, 'r'$\alpha=0.7$']
 	if usrc==1:
 		cname="Model %d" %(i+1)
-	#print "Lengths are: ", len(freq), len(values[0]), len(values[1])
+	# print("Lengths are: ", len(freq), len(values[0]), len(values[1]))
 		for mode in range(len(values)):
 		#for mode in range(1):
 			cname_temp="Mode %d" %(mode)
@@ -93,7 +93,7 @@ for i,pkl in enumerate(pfnames):
 					plt.plot(freq,values[mode],'-*',color=cols[mode],mec=cols[mode],ms=8)
 				except IndexError:
 					plt.plot(freq,values[mode],'-*')
-				
+
 		if iseng and len(values)>1:
 			if i==0:
 				plt.plot(freq,np.nansum(values,axis=0),'--',color='k',label='Total Analytic')
