@@ -1,5 +1,5 @@
 # SWRT
-SWRT: Surface Wave Refelction and Transmission. This is a suie of codes for semi-analytic solutions of seismic surface wave propgation across sharp lateral discontinuities in 2-D media.  It accompanies Datta (2018):
+SWRT: Surface Wave Refelction and Transmission. This is a suite of codes for semi-analytic solutions of seismic surface wave propgation across sharp lateral discontinuities in 2-D media.  It accompanies Datta (2018):
 
 Datta, A.: SWRT: A package for semi-analytical solutions of surface wave propagation, including mode conversion, across transversely aligned vertical discontinuities, Geosci. Instrum. Method. Data Syst., 7, 101-112, https://doi.org/10.5194/gi-7-101-2018, 2018.
 
